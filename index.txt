@@ -1,0 +1,211 @@
+Que1.Create an object constructor Person that takes name and age as parameters 
+and initializes them. Also, add a method sayHello to greet the person.
+
+ans.   here is the constructor function use ,
+
+// in function pass name and age as parameters
+
+function person(name,age) {
+    this.name = name;
+    this.age = age;
+ }
+ 
+ // method to greet the person.
+ 
+ person.prototype.sayHello = function() {
+    console.log(`hello my name is ${this.name} & i am ${this.age} year old`);
+ }
+ 
+ const sakshi = new person('sakshi',25);
+ sakshi.sayHello();
+
+ //we create a construtor function and passes a parameter name and age.
+ //then we create a function to greet a person 
+ //and create a new object 
+ //call the function
+
+ output:- hello my name is sakshi & i am 25 year old
+
+ que2.Create a constructor Employee that inherits from the Person constructor 
+ of problem 1. Add an additional property designation and a method
+ getDetails to display the employee details.
+ans. 
+
+  here is the constructor Employee that inherits from the Person constructor
+
+//person construtor for problem 1
+
+function person(name,age) {
+    this.name = name;
+    this.age = age;
+}
+ person.prototype.sayHello = function() {
+    console.log(`hello my name is ${this.name} & i am ${this.age} year old`);
+ }
+ 
+//employee constructor inheriting from person
+
+function employee(name,age,designation) {
+    person.call(this,name,age);
+
+    this.designation = designation;
+}
+// inherit person prototype
+employee.prototype = Object.create(person.prototype);
+employee.prototype.constructor = employee;
+
+employee.prototype.getDetails = function() {
+    console.log(`Name: ${this.name}, Age: ${this.age}, designation: 
+    ${this.designation}`);
+}
+
+const sakshi = new employee ('sakshi',25,'software engineer');
+sakshi.sayHello();
+sakshi.getDetails();
+
+
+output:--
+ hello my name is sakshi & i am 25 year old
+Name: sakshi, Age: 25, designation: 
+    software engineer
+
+
+Que3. Create an object Calculator with methods add, subtract, multiply, and divide.
+Demonstrate the usage of this within this methods such that method chaining of add,
+ subtract, multiply and divide is possible.
+
+ans. 
+    // here we use the classes
+
+    class Calculator {
+        constructor(value = 0) {
+            this.value = value;
+        }
+
+        add(num) {
+            this.value += num;
+            return this;
+        }
+
+        subtract(num) {
+            this.value -= num;
+            return this;
+        }
+        multiply(num) {
+            this.value *= num;
+            return this;
+        }
+        divide(num) {
+            if(num === 0){
+                throw new error ('cannot divide by zero');
+            }
+            this.value /= num;
+            return this;
+        }
+        result() {
+            return this.value;
+        }
+    }
+
+    const calc = new Calculator(10);
+
+    const result = calc.add(5)
+                       .subtract(2)
+                       .multiply(3)
+                       .divide(1)
+                       .result();
+
+        console.log(result);
+        output := 39,
+
+
+
+4. Define a base class Shape with a method draw. Create two subclasses Circle and
+ Rectangle that override the draw method. Demonstrate polymorphism 
+using instances of these classes.
+
+ans. here is base class Shape with a method draw Create two subclasses Circle and
+ Rectangle that override the draw method.
+
+ // base class Shape
+
+ class Shape {
+    constructor(color) {
+        this.color = color;
+    }
+
+    draw() {
+        throw new error("method must be implemented by subclasses");
+    }
+ }
+
+ //subclass circle
+
+ class Circle extends Shape {
+    constructor(radius,color) {
+        super(color);
+        this.radius = radius;
+    }
+
+    draw() {
+        console.log(`drawing a color ${this.color} circle with radius ${this.radius}`);
+    }
+ }
+
+// subclass Rectangle
+
+class Rectangle extends Shape {
+    constructor(width,height,color) {
+        super(color);
+        this.width = width;
+        this.height = height;
+    }
+    draw() {
+        console.log(`Drawing a ${this.color} rectangle with width ${this.width} and height ${this.height}`);
+    }
+}
+
+//Demonstrate polymorphism
+
+function drawShapes(shapes) {
+    shapes.forEach(shape => shape.draw());
+}
+
+//create instance of shapes
+
+const circle = new Circle(5,'pink');
+const rectangle = new Rectangle(4,6,'orange');
+const square = new Rectangle(3,3,'blue');
+
+//store in a array
+const shapes = [circle,rectangle,square];
+
+//call drawShapes function
+drawShapes(shapes);
+
+
+5. Create a simple polyfill for the Array.includes 
+method by the name of customIncludes.
+ans. 
+Here's a simple polyfill for the Array.includes method, named customIncludes:
+
+function customIncludes(arr,value,fromIndex = 0) {
+    fromIndex = Math.max(fromIndex,0);
+    fromIndex = Math.min(fromIndex,arr.length);
+
+ // Iterate through the array from the specified index
+
+ for(let i = fromIndex; i < arr.length; i++ ){
+    if(arr[i] === value || (arr[i] !== arr[i] && value !== value)){
+        return true;
+        }
+    }
+    return false;
+ }
+
+ const arr = [1,2,3,4,5];
+
+console.log(customIncludes(arr, 3)); // Output: true
+console.log(customIncludes(arr, 6)); // Output: false
+console.log(customIncludes(arr, NaN)); // Output: true if arr contains NaN
+console.log(customIncludes(arr, 2, 2)); // Output: false (search starts from index 2)
